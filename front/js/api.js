@@ -1,21 +1,22 @@
 export const api = {
-    url: "http://localhost:3000/api/products/",
-    init: function (method="GET", data) {
+    url: "http://localhost:3000/api/products/", // URL de l'API
+    // Un objet qui contient les paramètres de la requête
+    init: function (str = 'GET', data) {
         const init = {
-            method: method
+            method: str
         };
-
-        if (method === "POST") {
+    
+        if (str === 'POST') {
             init.headers = {
                 "Content-Type": "application/json"
-            };
-
-            init.body = JSON.stringify(data);
+            }
+            init.body = JSON.stringify(data)
         }
-
+    
         return init;
     },
-    res: async function(url = this.url, init = this.init) {
+    // function asynchrone qui retourne une réponse
+    res: async function (url = this.url, init = this.init) {
         const response = await fetch(url, init);
 
         if (!response.ok) {
@@ -23,6 +24,12 @@ export const api = {
             throw new Error(errorMessage);
         }
 
-        return response.json();
+        return response.json(); // la méthode json qui permet de produire un objet JavaScript
     }
 };
+
+// const response = await api.res();
+// console.log(response);
+
+// const init = api.init();
+// console.log(init);

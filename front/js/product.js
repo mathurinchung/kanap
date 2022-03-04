@@ -1,24 +1,29 @@
-import { api } from './api.js';
+import { api } from './api.js'; // API Module
 
 const params = new URL(document.location).searchParams;
-const id = params.get('id');
+const id = params.get('id'); // Gets ID from the URL
 
 try {
-    const url = api.url + id;
-    const product = await api.res(url);
+    const url = api.url + id; // l'URL d'un produit
+    const product = await api.res(url) // { object } L'objet product
+    // console.log(product); // Uncomment to see the result
     displayProduct(product);
 
     const button = document.querySelector('#addToCart');
-    button.addEventListener('click', addToCart);
+    button.addEventListener('click', addToCart); // Événement du bouton "Ajouter au panier"
 } catch (e) {
     const item = document.querySelector('.item');
-    item.textContent = "Produit introuvable";
+    item.textContent = "Produit introuvable"; // message d'erreur si un incident se produit
 
     // console.error(e) // Uncomment to see the error message
 }
 
-function displayProduct(product) {
-    const { name, imageUrl, altTxt, description, price, colors } = product;
+/**
+ * Crées les éléments d'un produit et l'affice
+ * @param { object } obj - L'objet d'un produit
+ */
+function displayProduct(obj) {
+    const { name, imageUrl, altTxt, description, price, colors } = obj;
 
     document.head.querySelector('title').textContent = name + " - KANAP";
 
@@ -38,6 +43,9 @@ function displayProduct(product) {
     }
 }
 
+/**
+ * Crées et ajoute un objet produit dans le LocalStorage
+ */
 function addToCart() {
     const errorMsg = document.querySelector('#errorMsg');
     errorMsg.style.color = '#fbbcbc';
@@ -57,6 +65,8 @@ function addToCart() {
             qty: parseInt(quantity.value)
         };
 
+        // console.log(product); // Uncomment to see the result
+
         setStorage(product);
 
         select.value = "";
@@ -68,6 +78,10 @@ function addToCart() {
     }, 3000);
 }
 
+/**
+ * Sets the LocalStorage
+ * @param { object } obj The object of a product
+ */
 function setStorage(obj) {
     const { _id, color, qty } = obj
     let storage = JSON.parse(localStorage.getItem("product") || "[]");
@@ -92,15 +106,21 @@ function setStorage(obj) {
     popupConfirm(obj);
 }
 
-function popupConfirm(product) {
+/**
+ * Résumes l'ajout et redirection
+ * @param { object } obj The object of a product
+ */
+function popupConfirm(obj) {
     const name = document.querySelector('#title').textContent;
-    const { color, qty} = product
+    const { color, qty} = obj
     let text = `${name} couleur: ${color}, quantité: ${qty} a bien été ajouté au panier ! \n`;
         text += "Consulter le panier OK ou revenir sur la page ANNULER";
 
     if (confirm(text)) {
+        // console.log("OK"); // Uncomment to see the result
         window.location.href = "./cart.html";
     } else {
+        // console.log("CANCEL"); // Uncomment to see the result
         window.location.href = "";
     }
 }

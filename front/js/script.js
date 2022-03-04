@@ -1,7 +1,8 @@
-import { api } from './api.js';
+import { api } from './api.js'; // API request Module
 
 try {
-    const products = await api.res();
+    const products = await api.res(); // Récupération du tableau de produits
+    // console.log(products); // Uncomment to see the result
     getProduct(products);
 } catch (e) {
     const items = document.querySelector('#items');
@@ -10,14 +11,23 @@ try {
     // console.error(e); // Uncomment to see the error message
 }
 
-function getProduct(products) {
-    for (const product of products) {
+/**
+ * Permet d'obtenir un produit du tableau de produit et l'afficher
+ * @param { object } arr - Le tableau de products
+ */
+function getProduct(arr) {
+    for (const product of arr) {
+        // console.log(product); // Uncomment to see the result
         displayProduct(product);
     }
 }
 
-function displayProduct(product) {
-    const { _id, name, imageUrl, altTxt, description } = product;
+/**
+ * Crées les éléments d'un produit et l'affiche
+ * @param { object } obj - L'objet d'un produit
+ */
+function displayProduct(obj) {
+    const { _id, name, imageUrl, altTxt, description } = obj;
 
     const productAnchor = document.createElement('a');
     productAnchor.href = "./product.html?id=" + _id;
