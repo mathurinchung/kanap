@@ -30,7 +30,7 @@ function displayProduct(obj) {
     const { _id, name, imageUrl, altTxt, description } = obj;
 
     const productAnchor = document.createElement('a');
-    productAnchor.href = "./product.html?id=" + _id;
+    productAnchor.href = "./product?id=" + _id;
     document.querySelector('#items').appendChild(productAnchor);
 
     const productArticle = document.createElement('article');
