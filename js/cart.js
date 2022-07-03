@@ -228,7 +228,7 @@ async function submitOrder(e) {
         const response = await api.res(url, init); // réponse de la requête
         // console.log(response); // Uncomment to see the result; before comment line: 208
 
-        window.location.href = "./confirmation.html?orderId=" + response.orderId; // redirection dans la page de confirmation avec l'orderId en paramètre dans l'URL
+        window.location.href = "./confirmation?orderId=" + response.orderId; // redirection dans la page de confirmation avec l'orderId en paramètre dans l'URL
     }
 }
 

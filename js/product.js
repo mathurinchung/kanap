@@ -118,7 +118,7 @@ function popupConfirm(obj) {
 
     if (confirm(text)) {
         // console.log("OK"); // Uncomment to see the result
-        window.location.href = "./cart.html";
+        window.location.href = "./cart";
     } else {
         // console.log("CANCEL"); // Uncomment to see the result
         window.location.href = "";
