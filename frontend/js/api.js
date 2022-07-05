@@ -1,5 +1,5 @@
 export const api = {
-    url: "https://kanap-app.herokuapp.com/api/products/", // URL de l'API
+    url: "http://localhost:3000/api/products/", // URL de l'API
     // Un objet qui contient les paramètres de la requête
     init: function (str = 'GET', data) {
         const init = {
