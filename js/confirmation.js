@@ -1,4 +1,10 @@
-const params = new URL(document.location).searchParams;
-document.querySelector('#orderId').textContent = params.get('orderId'); // Gets the orderId from the URL and display it
+import { getParams } from "./utils/index.js";
 
-localStorage.clear(); // Clear the localStorage
+// Get order ID from URL
+const orderId = getParams("orderId");
+
+// Redirect to homepage if no order ID
+if (!orderId) window.location.replace("/");
+
+// Display order ID
+document.querySelector("#orderId").textContent = orderId;
