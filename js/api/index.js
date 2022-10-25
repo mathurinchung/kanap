@@ -1,7 +1,7 @@
-class Api {
-  constructor (baseURL) {
-    this.baseURL = baseURL;
-  }
+export default class Api {
+    // Localhost API URL: "http://localhost:3000/api"
+    // Herokuapp API URL: "https://kanap-app.herokuapp.com/api"
+  static baseURL = "http://localhost:3000/api";
 
   /**
    * Fetch API
@@ -9,15 +9,15 @@ class Api {
    * @param { object } init 
    * @returns response
    */
-  async response(endpoint, init) {
+  static async response(endpoint, init) {
     try {
       const response = await fetch(this.baseURL + endpoint, init);
     
-      if (!response.ok) throw response;
+      if (!response.ok) throw new Error(response.status);
   
       return response.json();
-    } catch (e) {
-      throw Error(`${e.status} ${e.statusText}`)
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -26,9 +26,7 @@ class Api {
    * @param {*} url 
    * @returns response
    */
-  get(url) {
-    return this.response(url)
-  }
+  static get(url) { return this.response(url); }
 
   /**
    * POST method
@@ -36,16 +34,13 @@ class Api {
    * @param {*} data 
    * @returns response
    */
-  post(url, data) {
+  static post(url, data) {
     const init = {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     };
 
-    return this.response(url, init)
+    return this.response(url, init);
   }
 }
-
-// Localhost API URL: "http://localhost:3000/api"
-export const api = new Api("https://kanap-app.herokuapp.com/api");
