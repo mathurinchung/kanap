@@ -1,5 +1,9 @@
-import { api } from './api.js';
-import { getParams } from './getparams.js';
-import { isInvalid } from './isinvalid.js';
+export default class Utils {
+  constructor() {
+    this._cart = JSON.parse(localStorage.getItem("products") || "[]");
+  }
 
-export { api, getParams, isInvalid };
+  getIndex = (id, color) => this._cart.findIndex(product => product._id === id && product.color === color);
+
+  setCart = (cart) => cart.map(product => ({ _id: product._id, color: product.color, quantity: product.quantity }));
+}
