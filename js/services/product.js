@@ -20,19 +20,7 @@ export default class ProductService extends Api {
     }));
   }
 
-  static async orderProducts() {
-    const data = {
-      contact: {
-        firstName: "first",
-        lastName: "last",
-        address: "address",
-        city: "city",
-        email: "email@example.com"
-      },
-      products: [
-        "415b7cacb65d43b2b5c1ff70f3393ad1"
-      ]
-    }
+  static async orderProducts(data) {
     const { orderId } = await this.post("/products/order" , data);
 
     return orderId;
