@@ -1,8 +1,8 @@
 import { displayOrderId } from "../views/product.js";
+import { getParams } from "../utils/getParams.js";
 
 // Get orderId from URL params
-const URLSearchParams = new URL(window.location.href).searchParams;
-const orderId = URLSearchParams.get("orderId") || null;
+const orderId = getParams("orderId");
 
 // Redirect to homepage if no orderId
 if (!orderId) window.location.replace("/");
