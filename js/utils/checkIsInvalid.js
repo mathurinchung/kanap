@@ -1,16 +1,39 @@
 /**
- * Checks input
- * @param { string } id - selector to match formdata element
- * @param { function } fn - The function that checks the input
+ * 
+ */
+export const schemas = {
+  letters: {
+    regex: /^[A-Za-z- ]+$/,
+    message: "Veuillez saisir un nom valide"
+  },
+  lettersDigit: {
+    regex: /^[0-9A-Za-zÀ-ÿ-', ]+$/,
+    message: 'Veuillez saisir des chiffres et des lettres uniquement',
+  },
+  email: {
+    regex: /[a-z0-9.-_]+@[a-z0-9]+\.[a-z]{2,3}/,
+    message: "Veuillez entrer un email valide"
+  }
+};
+
+/**
+ * 
+ * @param { string } id 
+ * @param { object } schema 
  * @returns Boolean
  */
-const checkInput = (id, fn) => {
+export const checkInput = (id, schema) => {
   const formElements = [ ...document.querySelectorAll(".cart__order__form__question") ];
+  const formData = formElements.find(el => el.querySelector(id));
+  const inputElement = formData.querySelector("input");
+  const inputValue = inputElement.value.trim();
+
   const errorMsgElement = document.querySelector(id + "ErrorMsg");
-  const formdata = formElements.find(el => el.querySelector(id));
 
   try {
-    fn(formdata);
+    if (inputValue === "") throw new Error("Veuillez remplir ce champ");
+    else if (!schema.regex.test(inputValue)) throw new Error(schema.message);
+    else if (inputValue.length < 3) throw new Error("Veuillez saisir 3 caractères ou plus");
 
     errorMsgElement.textContent = ""
     return false;
@@ -19,43 +42,3 @@ const checkInput = (id, fn) => {
     return true;
   }
 }
-
-
-/**
- * Checks the value of the input
- * @param { string } formdata
- */
-const checkName = formdata => {
-  const input = formdata.querySelector("input").value;
-  const regex = /^[A-Za-z- ]+$/;
-
-  if (input === "") throw new Error("Veuillez remplir ce champ");
-  else if (regex.test(input) === false) throw new Error(`Veuillez saisir un nom valide`);
-  else if (input.length < 2) throw new Error(`Veuillez saisir 2 caractères ou plus pour le champ du nom`);
-}
-
-const checkEmpty = formdata => {
-  const input = formdata.querySelector("input").value;
-
-  if (input === "") throw new Error("Veuillez remplir ce champ");
-}
-
-const checkEmail = formdata => {
-  const input = formdata.querySelector("input").value;
-  const regex = /[a-z0-9.-_]+@[a-z0-9]+\.[a-z]{2,3}/;
-
-  if (input === "") throw new Error("Veuillez remplir ce champ");
-  else if (regex.test(input) === false) throw new Error("Veuillez entrer un email valide");
-}
-
-
-/**
- * Checks firstname is invalid
- * @param { string } id - selector to match firstname
- * @returns Boolean
- */
-export const firstname = id => checkInput(id, checkName);
-export const lastname = id => checkInput(id, checkName);
-export const address = id => checkInput(id, checkEmpty);
-export const city = id => checkInput(id, checkEmpty);
-export const email = id => checkInput(id, checkEmail);
