@@ -1,4 +1,4 @@
-import { checkInput, schemas } from "./checkIsInvalid.js";
+import { checkInput, schemas } from "../utils/checkIsInvalid.js";
 
 /**
  * 

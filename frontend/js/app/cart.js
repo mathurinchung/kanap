@@ -1,7 +1,7 @@
 import { getProductsCart, orderProducts } from "../services/product.js";
 import { displayCart, displayCartTotal } from "../views/product.js";
-import { handleQuantityInput, handleDeleteItem } from "../utils/cart.js";
-import { handleSendOrder } from "../utils/order.js";
+import { handleQuantityInput, handleDeleteItem } from "../containers/cart.js";
+import { handleSendOrder } from "../containers/order.js";
 
 // Get cart
 let cart = JSON.parse(localStorage.getItem("products") || "[]");
