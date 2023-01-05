@@ -62,7 +62,27 @@ export const displayCart = cart => {
     </article>
   `;
 
-  return (cart.length === 0) ? emptyCart : cart.map(ProductCartDOM);
+  return (cart.length === 0) ? emptyCart : cart.map(ProductCartDOM).join("");
+};
+
+/**
+ * 
+ * @param {*} cart 
+ */
+export const displayCartTotal = cart => {
+  const { quantity, price } = cart.reduce(
+    (total, product) => ({
+      quantity: total.quantity + product.quantity,
+      price: total.price + product.price * product.quantity
+    }),
+    { quantity: 0, price: 0 }
+  );
+
+  const totalQuantityElement = document.querySelector("#totalQuantity");
+  const totalPriceElement = document.querySelector("#totalPrice");
+
+  totalQuantityElement.textContent = quantity;
+  totalPriceElement.textContent = price;
 };
 
 /**

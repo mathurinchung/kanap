@@ -1,11 +1,11 @@
-import { get, post } from "../api/index.js";
+import * as api from "../api/index.js";
 
 /**
  * 
  * @returns 
  */
 export const getAllProducts = async () => {
-  return await get("/products")
+  return await api.get("/products")
 };
 
 /**
@@ -14,7 +14,7 @@ export const getAllProducts = async () => {
  * @returns 
  */
 export const getProductById = async id => {
-  return await get(`/products/${id}`)
+  return await api.get(`/products/${id}`)
 };
 
 /**
@@ -34,5 +34,5 @@ export const getProductsCart = async cart => {
  * @returns 
  */
 export const orderProducts = async data => {
-  return await post("/products/order" , data)
+  return await api.post("/products/order" , data)
 };

@@ -1,9 +1,12 @@
-import * as check from "./checkIsInvalid.js";
+import { checkInput, schemas } from "./checkIsInvalid.js";
 
-const formElement = document.querySelector(".cart__order__form");
-formElement.setAttribute("novalidate", "");
-
+/**
+ * 
+ * @param {*} cart 
+ * @returns 
+ */
 const getFormData = cart => {
+  const formElement = document.querySelector(".cart__order__form");
   const formData = new FormData(formElement);
   const contact = Object.fromEntries(formData.entries());
 
@@ -12,16 +15,26 @@ const getFormData = cart => {
   return { contact, products };
 }
 
-const isInvalid = () => {
-  return (check.firstname("#firstName") || check.lastname("#lastName") || check.address("#address") || check.city("#city") || check.email("#email")) ? true : false;
+/**
+ * 
+ * @returns 
+ */
+const handleIsInvalid = () => {
+  return (checkInput("#firstName", schemas.letters) || checkInput("#lastName", schemas.letters) || checkInput("#address", schemas.lettersDigit) || checkInput("#city", schemas.letters) || checkInput("#email", schemas.email)) ? true : false;
 }
 
-const sendOrder = (cart, orderProducts) => {
+/**
+ * 
+ * @param {*} cart 
+ * @param {*} orderProducts 
+ * @returns 
+ */
+export const handleSendOrder = (cart, orderProducts) => {
   return async e => {
     e.preventDefault();
   
     if (cart.length === 0) return alert("Veuillez remplir le panier");
-    if (isInvalid()) return;
+    if (handleIsInvalid()) return;
   
     const data = getFormData(cart);
 
@@ -30,9 +43,4 @@ const sendOrder = (cart, orderProducts) => {
     localStorage.removeItem("products");
     window.location.href = "./confirmation.html?orderId=" + orderId;
   }
-};
-
-export const handleSubmit = (cart, orderProducts) => {
-  const submit = sendOrder(cart, orderProducts);
-  formElement.addEventListener("submit", submit);
 };
