@@ -1,28 +1,38 @@
-import Api from "../api/index.js";
+import { get, post } from "../api/index.js";
 
-export default class ProductService extends Api {
-  static async getAllProducts() {
-    const products = await this.get("/products");
+/**
+ * 
+ * @returns 
+ */
+export const getAllProducts = async () => {
+  return await get("/products")
+};
 
-    return products;
-  }
+/**
+ * 
+ * @param {*} id 
+ * @returns 
+ */
+export const getProductById = async id => {
+  return await get(`/products/${id}`)
+};
 
-  static async getProductById(id) {
-    const product = await this.get(`/products/${id}`);
+/**
+ * 
+ * @returns 
+ */
+export const getProductsCart = async cart => {
+  return await Promise.all(cart.map(async item => {
+    const product = await getProductById(item._id);
+    return { ...product, _id: item._id, color: item.color, quantity: item.quantity };
+  }));
+};
 
-    return product;
-  }
-
-  static async getProductsCart(cart) {
-    return await Promise.all(cart.map(async item => {
-      const product = await this.getProductById(item._id);
-      return { ...product, _id: item._id, color: item.color, quantity: item.quantity };
-    }));
-  }
-
-  static async orderProducts(data) {
-    const { orderId } = await this.post("/products/order" , data);
-
-    return orderId;
-  }
-}
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
+export const orderProducts = async data => {
+  return await post("/products/order" , data)
+};

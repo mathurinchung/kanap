@@ -1,50 +1,38 @@
-import CheckIsInvalid from "./checkIsInvalid.js";
+import * as check from "./checkIsInvalid.js";
 
-export default class OrderUtils {
-  constructor() {
-    this.form = document.querySelector(".cart__order__form");
-    this.form.setAttribute("novalidate", "")
-  }
+const formElement = document.querySelector(".cart__order__form");
+formElement.setAttribute("novalidate", "");
 
-  getData(cart) {
-    const formData = new FormData(this.form);
-    const contact = Object.fromEntries(formData.entries());
+const getFormData = cart => {
+  const formData = new FormData(formElement);
+  const contact = Object.fromEntries(formData.entries());
+
+  const products = cart.map(product => product._id);
+
+  return { contact, products };
+}
+
+const isInvalid = () => {
+  return (check.firstname("#firstName") || check.lastname("#lastName") || check.address("#address") || check.city("#city") || check.email("#email")) ? true : false;
+}
+
+const sendOrder = (cart, orderProducts) => {
+  return async e => {
+    e.preventDefault();
   
-    const products = cart.map(product => product._id);
+    if (cart.length === 0) return alert("Veuillez remplir le panier");
+    if (isInvalid()) return;
   
-    return { contact, products };
-  }
+    const data = getFormData(cart);
 
-  async sendOrder(cart, ProductService) {
-    const data = this.getData(cart);
-
-    const orderId = await ProductService.orderProducts(data);
-
+    const { orderId } = await orderProducts(data);
+  
     localStorage.removeItem("products");
     window.location.href = "./confirmation.html?orderId=" + orderId;
   }
+};
 
-  isInvalid() {
-    const formData = [ ...document.querySelectorAll(".cart__order__form__question") ];
-    const check = new CheckIsInvalid(formData);
-
-   return (check.firstname("#firstName") || check.lastname("#lastName") || check.address("#address") || check.city("#city") || check.email("#email")) ? true : false;
-  }
-
-  handleSubmit(cart, ProductService) {
-    return e => {
-      e.preventDefault();
-    
-      if (cart.length === 0) return alert("Veuillez remplir le panier");
-      if (this.isInvalid()) return;
-    
-      this.sendOrder(cart, ProductService);
-    }
-  }
-
-  init(cart, ProductService) {
-    const submit = this.handleSubmit(cart, ProductService);
-
-    this.form.addEventListener("submit", submit);
-  }
-}
+export const handleSubmit = (cart, orderProducts) => {
+  const submit = sendOrder(cart, orderProducts);
+  formElement.addEventListener("submit", submit);
+};
