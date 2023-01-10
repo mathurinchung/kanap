@@ -1,6 +1,7 @@
 import { getProductsCart, orderProducts } from "../services/product.js";
-import { displayCart, displayCartTotal } from "../views/product.js";
-import { handleQuantityInput, handleDeleteItem } from "../containers/cart.js";
+import { displayCart } from "../views/product.js";
+import { displayCartTotal } from "../views/cart.js";
+import { handleCartTotal, handleQuantityInput, handleDeleteItem } from "../containers/cart.js";
 import { handleSendOrder } from "../containers/order.js";
 
 // Get cart
@@ -9,8 +10,10 @@ cart = await getProductsCart(cart);
 
 // Display cart
 const cartItemsElement = document.querySelector("#cart__items");
-cartItemsElement.innerHTML = displayCart(cart);
-displayCartTotal(cart);
+cartItemsElement.innerHTML = (cart.length === 0) ? emptyCart : cart.map(displayCart).join("");
+
+const total = handleCartTotal(cart);
+displayCartTotal(total);
 
 // Event handler
 const quantityInputElements = document.querySelectorAll(".itemQuantity");
@@ -21,14 +24,17 @@ const handleDelete = handleDeleteItem(cart);
 
 quantityInputElements.forEach(el => el.addEventListener("change", e => {
   handleQuantity(e);
-  displayCartTotal(cart);
+
+  const total = handleCartTotal(cart);
+  displayCartTotal(total);
 }));
 
 deleteButtonElements.forEach(el => el.addEventListener("click", e => {
   handleDelete(e)
-  displayCartTotal(cart);
-}));
 
+  const total = handleCartTotal(cart);
+  displayCartTotal(total);
+}));
 
 const formElement = document.querySelector(".cart__order__form");
 formElement.setAttribute("novalidate", "");

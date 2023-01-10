@@ -1,4 +1,4 @@
-import { displayOrderId } from "../views/product.js";
+import { displayOrderId } from "../views/order.js";
 import { getParams } from "../utils/getParams.js";
 
 // Get orderId from URL params

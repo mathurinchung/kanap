@@ -41,6 +41,6 @@ export const handleSendOrder = (cart, orderProducts) => {
     const { orderId } = await orderProducts(data);
   
     localStorage.removeItem("products");
-    window.location.href = "./confirmation.html?orderId=" + orderId;
+    window.location.href = "./confirmation?orderId=" + orderId;
   }
 };
