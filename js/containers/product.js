@@ -5,7 +5,7 @@ const popupConfirm = () => {
   let text =  "Le produit a bien été ajouté au panier ! \n";
       text += "Consulter le panier OK ou revenir sur la page ANNULER";
 
-  confirm(text) ? window.location.href = "./cart.html" : null;
+  confirm(text) ? window.location.href = "./cart" : null;
 };
 
 /**

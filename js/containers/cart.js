@@ -1,3 +1,14 @@
+export const handleCartTotal = cart => {
+  const { quantity, price } = cart.reduce((total, product) => ({
+      quantity: total.quantity + product.quantity,
+      price: total.price + product.price * product.quantity
+    }),
+    { quantity: 0, price: 0 }
+  );
+
+  return { quantity, price }
+};
+
 /**
  * 
  * @param {*} cart 

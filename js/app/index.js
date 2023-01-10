@@ -6,4 +6,4 @@ const products = await getAllProducts();
 
 // Display products
 const productsElement = document.querySelector("#items");
-productsElement.innerHTML = displayProducts(products).join("");
+productsElement.innerHTML = products.map(displayProducts).join("");
