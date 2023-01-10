@@ -2,12 +2,20 @@ version: "3.9"
 
 services:
 
+  api:
+    image: kanap
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/app/backend
+    command: sh -c "cd backend && npm i && node server"
+
   web:
     image: kanap
     build: .
     ports:
-      - "3000:3000"
-      - "8080:8080"
+      - 8080:8080
     volumes:
-      - ./backend:/app/backend
       - ./frontend:/app/frontend
+    command: sh -c "cd frontend && live-server"
