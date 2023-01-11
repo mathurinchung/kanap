@@ -3,7 +3,13 @@ version: "3.9"
 services:
 
   api:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512MB
     image: kanap
+    container_name: kanap-api
     build: .
     ports:
       - 3000:3000
@@ -12,7 +18,13 @@ services:
     command: sh -c "cd backend && npm i && node server"
 
   web:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512MB
     image: kanap
+    container_name: kanap-web
     build: .
     ports:
       - 8080:8080
