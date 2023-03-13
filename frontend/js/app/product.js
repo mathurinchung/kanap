@@ -1,7 +1,7 @@
-import { getProductById } from "../services/product.js";
-import { displayProduct } from "../views/product.js";
-import { handleAddToCart } from "../containers/product.js";
-import { getParams } from "../utils/getParams.js";
+import { getProductById } from '../services/product.js';
+import { displayProduct } from '../views/product.js';
+import { handleAddToCart } from '../containers/product.js';
+import { getParams } from '../utils/params.js';
 
 // Get ID from URL params
 const id = getParams("id");
@@ -13,5 +13,5 @@ const product = await getProductById(id);
 displayProduct(product);
 
 // Event handler
-const buttonElement = document.querySelector("#addToCart");
-buttonElement.addEventListener("click", () => handleAddToCart(id));
+const buttonElement = document.querySelector('#addToCart');
+buttonElement.addEventListener('click', () => handleAddToCart(id));

@@ -16,7 +16,7 @@ export const handleCartTotal = cart => {
  */
 export const handleQuantityInput = cart => {
   return e => {
-    const selectedItem = e.target.closest("[data-id]");
+    const selectedItem = e.target.closest('[data-id]');
     const { id, color } = selectedItem.dataset;
     const quantity = parseInt(e.target.value);
 
@@ -24,7 +24,7 @@ export const handleQuantityInput = cart => {
     cart[index].quantity = quantity;
 
     const newCart = cart.map(product => ({ _id: product._id, color: product.color, quantity: product.quantity }));
-    localStorage.setItem("products", JSON.stringify(newCart));
+    localStorage.setItem('products', JSON.stringify(newCart));
   }
 };
 
@@ -35,7 +35,7 @@ export const handleQuantityInput = cart => {
  */
 export const handleDeleteItem = cart => {
   return e => {
-    const selectedItem = e.target.closest("[data-id]");
+    const selectedItem = e.target.closest('[data-id]');
     const { id, color } = selectedItem.dataset;
   
     selectedItem.remove();
@@ -44,9 +44,9 @@ export const handleDeleteItem = cart => {
     cart.splice(index, 1);
   
     const newCart = cart.map(product => ({ _id: product._id, color: product.color, quantity: product.quantity }));
-    localStorage.setItem("products", JSON.stringify(newCart));
+    localStorage.setItem('products', JSON.stringify(newCart));
 
-    const cartItemsElement = document.querySelector("#cart__items");
+    const cartItemsElement = document.querySelector('#cart__items');
     if (cart.length === 0) cartItemsElement.innerHTML = `<p style="text-align: center">Votre panier est vide</p>`
   }
 };

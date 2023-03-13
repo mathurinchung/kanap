@@ -18,12 +18,12 @@ export const displayProducts = product => (`
  * @param {*} product
  */
 export const displayProduct = product => {
-  document.title = product.name + " - KANAP";
-  document.querySelector(".item__img").innerHTML = `<img src=${product.imageUrl} alt="${product.altTxt}" />`;
-  document.querySelector("#title").textContent = product.name;
-  document.querySelector("#price").textContent = product.price;
-  document.querySelector("#description").textContent = product.description;
-  document.querySelector("#colors").innerHTML += product.colors.map(color => `<option value=${color}>${color}</option>`).join("");
+  document.title = `${ product.name } - KANAP`;
+  document.querySelector('.item__img').innerHTML = `<img src=${ product.imageUrl } alt="${ product.altTxt }" />`;
+  document.querySelector('#title').textContent = product.name;
+  document.querySelector('#price').textContent = product.price;
+  document.querySelector('#description').textContent = product.description;
+  document.querySelector('#colors').innerHTML += product.colors.map(color => `<option value=${color}>${color}</option>`).join('');
 };
 
 /**
@@ -32,15 +32,15 @@ export const displayProduct = product => {
  * @returns 
  */
 export const displayCart = product => (`
-  <article class="cart__item" data-id=${product._id} data-color=${product.color}>
+  <article class="cart__item" data-id=${ product._id } data-color=${ product.color }>
     <div class="cart__item__img">
-      <img src=${product.imageUrl} alt=${product.altTxt} />
+      <img src=${ product.imageUrl } alt=${ product.altTxt } />
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__description">
-        <h2>${product.name}</h2>
-        <p>${product.color}</p>
-        <p>${product.price} €</p>
+        <h2>${ product.name }</h2>
+        <p>${ product.color }</p>
+        <p>${ product.price } €</p>
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">

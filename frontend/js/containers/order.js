@@ -1,4 +1,4 @@
-import { checkInput, schemas } from "../utils/checkIsInvalid.js";
+import { checkInput, schemas } from '../utils/checkIsInvalid.js';
 
 /**
  * 
@@ -6,7 +6,7 @@ import { checkInput, schemas } from "../utils/checkIsInvalid.js";
  * @returns 
  */
 const getFormData = cart => {
-  const formElement = document.querySelector(".cart__order__form");
+  const formElement = document.querySelector('.cart__order__form');
   const formData = new FormData(formElement);
   const contact = Object.fromEntries(formData.entries());
 
@@ -20,7 +20,7 @@ const getFormData = cart => {
  * @returns 
  */
 const handleIsInvalid = () => {
-  return (checkInput("#firstName", schemas.letters) || checkInput("#lastName", schemas.letters) || checkInput("#address", schemas.lettersDigit) || checkInput("#city", schemas.letters) || checkInput("#email", schemas.email)) ? true : false;
+  return (checkInput('#firstName', schemas.letters) || checkInput('#lastName', schemas.letters) || checkInput('#address', schemas.lettersDigit) || checkInput('#city', schemas.letters) || checkInput('#email', schemas.email)) ? true : false;
 }
 
 /**
@@ -29,18 +29,17 @@ const handleIsInvalid = () => {
  * @param {*} orderProducts 
  * @returns 
  */
-export const handleSendOrder = (cart, orderProducts) => {
+export const handleSendOrder = (cart, createOrder) => {
   return async e => {
     e.preventDefault();
   
-    if (cart.length === 0) return alert("Veuillez remplir le panier");
+    if (cart.length === 0) return alert('Veuillez remplir le panier');
     if (handleIsInvalid()) return;
   
     const data = getFormData(cart);
 
-    const { orderId } = await orderProducts(data);
-  
-    localStorage.removeItem("products");
-    window.location.href = "./confirmation?orderId=" + orderId;
+    const { orderId } = await createOrder(data);
+
+    window.location.href = `./confirmation?orderId=${ orderId }`;
   }
 };

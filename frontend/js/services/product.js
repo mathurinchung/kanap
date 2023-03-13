@@ -1,21 +1,19 @@
-import * as api from "../api/index.js";
+import * as api from './api/index.js'
+
+const key = "products";
 
 /**
  * 
  * @returns 
  */
-export const getAllProducts = async () => {
-  return await api.get("/products")
-};
+export const getProducts = () => api.get({ url: `/${ key }` });
 
 /**
  * 
  * @param {*} id 
  * @returns 
  */
-export const getProductById = async id => {
-  return await api.get(`/products/${id}`)
-};
+export const getProductById = id => api.get({ url: `/${ key }/${ id }` });
 
 /**
  * 
@@ -24,7 +22,7 @@ export const getProductById = async id => {
 export const getProductsCart = async cart => {
   return await Promise.all(cart.map(async item => {
     const product = await getProductById(item._id);
-    return { ...product, _id: item._id, color: item.color, quantity: item.quantity };
+    return { ...product, _id: item._id, color: item.color, quantity: item.quantity }
   }));
 };
 
@@ -33,6 +31,4 @@ export const getProductsCart = async cart => {
  * @param {*} data 
  * @returns 
  */
-export const orderProducts = async data => {
-  return await api.post("/products/order" , data)
-};
+export const createOrder = data => api.post({ url: `/${ key }/order`, data });
